@@ -4,6 +4,16 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import rainbow from "chalk-rainbow";
 
+
+async function animateText(text: string) {
+    for (let char of text) {
+      process.stdout.write(char);
+      // Add a delay of 100 milliseconds between each character
+      await new Promise(resolve => setTimeout(resolve, 5));
+    }
+  }
+  (async () => {
+
 let myBalance = 10000;
 
 
@@ -23,12 +33,12 @@ let atm = await inquirer.prompt(
     
     )
     if(atm.userName === "huzaifa" && atm.userPin === 3108){
-        console.log("Correct userName and pin");
-        console.log(chalk.gray("\n------------------------------------------------------\n"));
+        await animateText("Correct userName and pin");
+        await animateText(chalk.gray("\n------------------------------------------------------\n"));
         
-        console.log(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
+        await animateText(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
 
-        console.log(chalk.gray("\n------------------------------------------------------\n"));
+        await animateText(chalk.gray("\n------------------------------------------------------\n"));
 
         let action = await inquirer.prompt([
             {
@@ -39,7 +49,7 @@ let atm = await inquirer.prompt(
             }
         ])
 
-        console.log(chalk.gray("\n------------------------------------------------------\n"));
+        await animateText(chalk.gray("\n------------------------------------------------------\n"));
 // _______________________________________________________________________________________________________________________________________________
 
 // Compeleted
@@ -55,13 +65,13 @@ let atm = await inquirer.prompt(
                 choices: [2000,4000,6000,8000,10000]
             }
         ])
-        console.log(chalk.gray("\n------------------------------------------------------\n"));
+        await animateText(chalk.gray("\n------------------------------------------------------\n"));
     
         if(withDrawAmount.withdraw <= myBalance){
             myBalance -= withDrawAmount.withdraw
-            console.log("Amount with Drawn " + withDrawAmount.withdraw);
-            console.log(chalk.gray("\n------------------------------------------------------\n"));
-            console.log(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
+            await animateText("Amount with Drawn " + withDrawAmount.withdraw);
+            await animateText(chalk.gray("\n------------------------------------------------------\n"));
+            await animateText(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
         }
 
     }
@@ -71,7 +81,7 @@ let atm = await inquirer.prompt(
 // Balance checking
 
             else if(action.operators === "Check Balance"){
-            console.log(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
+            await animateText(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
             
         }
         
@@ -92,16 +102,16 @@ let atm = await inquirer.prompt(
             ])
             if(TransferAmount.amount <= myBalance){
                 myBalance -= TransferAmount.amount
-                console.log(chalk.gray("\n------------------------------------------------------\n"));
+                await animateText(chalk.gray("\n------------------------------------------------------\n"));
                 let TransferNumber = await inquirer.prompt([{
                     name: "mobileNumber",
                     message: chalk.bold.green("Enter Recievier account number: "),
                     type: "string"
                 }])
-                console.log(chalk.gray("\n------------------------------------------------------\n"));
-                    console.log(`${TransferAmount.amount} transfered succesfully to: ` + TransferNumber.mobileNumber);
-                    console.log(chalk.gray("\n------------------------------------------------------\n"));
-                    console.log(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
+                await animateText(chalk.gray("\n------------------------------------------------------\n"));
+                    await animateText(`${TransferAmount.amount} transfered succesfully to: ` + TransferNumber.mobileNumber);
+                    await animateText(chalk.gray("\n------------------------------------------------------\n"));
+                    await animateText(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
                 }
                 
 
@@ -128,9 +138,9 @@ let atm = await inquirer.prompt(
             
             if(addMoney.moneyAdd <= myBalance){
             myBalance += addMoney.moneyAdd
-            console.log(`${addMoney.moneyAdd} is succesfully transfered to your account`);
-            console.log(chalk.gray("\n------------------------------------------------------\n"));
-            console.log(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
+            await animateText(`${addMoney.moneyAdd} is succesfully transfered to your account`);
+            await animateText(chalk.gray("\n------------------------------------------------------\n"));
+            await animateText(chalk.bold(rainbow("Your current account Balance is: ") + myBalance + '\n'));
         }
         }
         
@@ -159,7 +169,7 @@ let atm = await inquirer.prompt(
 // _______________________________________________________________________________________________________________________________________________
         
         else{
-            console.log("Please Select a valid operator")
+            await animateText("Please Select a valid operator")
         }
         
 
@@ -169,5 +179,5 @@ let atm = await inquirer.prompt(
 
 
     }else{
-        console.log("Incorrect userName or pin");
-    }
+        await animateText("Incorrect userName or pin");
+    }})();
